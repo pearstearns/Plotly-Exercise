@@ -4,16 +4,18 @@ author: "Ian Roberts"
 date: "April 13, 2017"
 output: html_document
 ---
-
+        
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = F)
 knitr::opts_chunk$set(warning = F)
 ```
 
-##Background
+###Background
 What is being visualized in this project is the Gender breakdown of TIME Magazine covers by crowdflower found [here](https://data.world/crowdflower/time-magazine-covers). From the description: 'Contributors were shown images of Time Magazine covers since the late 1920s and asked to classify if the person was male or female. Data is broken down overall and on an annual basis.'
 
-## By Total Number of Apperances
+### By Total Number of Apperances
+
+This first visualization will be a scatterplot which takes total number of appearances by gender by year. Total number of women on covers will be in green, men will be in blue, and the red dashed line is the total number of covers that year.
 ```{r thing}
 library(dplyr)
 library(tidyr)
@@ -27,13 +29,18 @@ long <- tcv %>%
         mutate(total = rep(tcv$Total, 2))
 
 plot_ly(x = long[,3], y = long[,2], color = long[,1], type = 'scatter') %>%
-        add_trace(y = long[,4], name = 'Total', type = 'scatter', mode = 'lines', line = list(color = 'rgb(205,12,24)', dash = 'dash')) %>%
-                layout(title = 'Gender of Person on TIME Magazine Cover',
-                        yaxis = list(title = "Total Yearly Apperances"))
+        add_trace(y = long[,4], 
+                  name = 'Total', 
+                  mode = 'lines', 
+                  line = list(color = 'rgb(205,12,24)', 
+                              dash = 'dash')) %>%
+        layout(title = 'Gender of Person on TIME Magazine Cover',
+               yaxis = list(title = "Total Yearly Apperances"))
 ```
 
 
-## By Percentage of Appearances
+### By Percentage of Appearances
+This next figure is a stacked area chart with percent of covers featuring women against percentage featuring men.
 ```{r thing2}
 long <- tcv %>% 
         select(Male.., Female..) %>%
@@ -48,13 +55,13 @@ longF <- long[long$key == 'Female..',]
 longM <- long[long$key == 'Male..',]
 
 
-plot_ly(x = longF$year, y = longF$value, type = 'scatter', mode = 'none', name = 'Female', fill = 'tozeroy') %>%
-        add_trace(x = longM$year, y = longM$value, name = 'Male', mode = 'none', fill = 'tonexty') %>% 
-                layout(title = 'Gender of Person on TIME Magazine Cover',
-                yaxis = list(title = "% of Yearly Apperances"))
+plot_ly(x = longF$year, y = longF$value, type = 'scatter', mode = 'none', name = 'Female', fill = 'tonexty') %>%
+        add_trace(x = longM$year, y = longM$value, name = 'Male', mode = 'none') %>% 
+        layout(title = 'Gender of Person on TIME Magazine Cover',
+               yaxis = list(title = "% of Yearly Apperances"))
 
 ```
 
-##Conclusion
+###Conclusion
 
 To quote [the article](https://www.crowdflower.com/time-magazine-cover-data/) in which this dataset is referenced: "*TIME* magazine really likes dudes"

@@ -108,5 +108,4 @@ plot_ly(x = longF$year, y = longF$value, type = 'scatter', mode = 'none', name =
 ```
 
 ##Conclusion
-
-To quote [the article](https://www.crowdflower.com/time-magazine-cover-data/) in which this dataset is referenced: "*TIME* magazine really likes dudes"
+Just like many other areas of life, there is a stark underrepresentation of women. Or, to quote [the article](https://www.crowdflower.com/time-magazine-cover-data/) in which this dataset is referenced: "*TIME* magazine really likes dudes".
